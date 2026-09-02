@@ -1,0 +1,137 @@
+:root {
+  color-scheme: dark;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #181818;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  background: #181818;
+  color: #ffffff;
+}
+
+.game-layout {
+  width: min(100%, 504px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+}
+
+#game-board {
+  display: block;
+  width: min(300px, calc(100vw - 244px));
+  height: auto;
+  aspect-ratio: 1 / 2;
+  background: #000000;
+  border: 2px solid #4a4a4a;
+}
+
+.score-panel {
+  flex: 0 0 180px;
+  width: 180px;
+  padding: 24px;
+  background: #242424;
+  border: 2px solid #4a4a4a;
+  text-align: center;
+}
+
+.score-panel h1 {
+  margin: 0 0 28px;
+  font-size: 28px;
+  letter-spacing: 4px;
+}
+
+.stats-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.stat-label {
+  margin: 0 0 8px;
+  color: #bdbdbd;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.next-panel {
+  margin-top: 28px;
+}
+
+#next-piece {
+  display: block;
+  width: 120px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  background: #000000;
+  border: 1px solid #4a4a4a;
+}
+
+.game-status {
+  margin: 28px 0 0;
+  color: #ff5252;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.restart-button {
+  width: 100%;
+  margin-top: 28px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 4px;
+  background: #00bcd4;
+  color: #001417;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.restart-button:hover {
+  background: #26c6da;
+}
+
+.restart-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .game-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #game-board {
+    width: min(300px, calc(100vw - 40px));
+  }
+
+  .score-panel {
+    flex-basis: auto;
+    width: min(300px, calc(100vw - 40px));
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #next-piece {
+    width: 100px;
+  }
+}
