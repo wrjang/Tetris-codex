@@ -7,6 +7,9 @@ const scoreElement = document.getElementById("score");
 const levelElement = document.getElementById("level");
 const gameStatusElement = document.getElementById("game-status");
 const restartButton = document.getElementById("restart-button");
+const mobileControlButtons = document.querySelectorAll(
+  ".mobile-controls [data-action]",
+);
 
 // 테트리스 보드는 가로 10칸, 세로 20칸으로 구성합니다.
 const BOARD_COLUMNS = 10;
@@ -460,6 +463,33 @@ function hardDropCurrentPiece() {
 }
 
 /**
+ * 키보드와 모바일 버튼이 공통으로 사용하는 게임 조작 함수입니다.
+ */
+function performPlayerAction(action) {
+  if (isGameOver) {
+    return;
+  }
+
+  switch (action) {
+    case "left":
+      moveCurrentPiece(-1);
+      break;
+    case "right":
+      moveCurrentPiece(1);
+      break;
+    case "soft-drop":
+      dropPiece();
+      break;
+    case "rotate":
+      rotateCurrentPiece();
+      break;
+    case "hard-drop":
+      hardDropCurrentPiece();
+      break;
+  }
+}
+
+/**
  * 방향키와 스페이스바 입력을 테트리스 조작으로 처리합니다.
  */
 function handleKeyDown(event) {
@@ -471,33 +501,42 @@ function handleKeyDown(event) {
     return;
   }
 
-  // 방향키 스크롤과 스페이스바의 페이지 이동을 막습니다.
-  event.preventDefault();
-
-  if (isGameOver) {
+  // 버튼에 포커스가 있을 때는 버튼 자체의 키보드 동작을 우선합니다.
+  if (event.target?.closest?.("button")) {
     return;
   }
 
+  // 방향키 스크롤과 스페이스바의 페이지 이동을 막습니다.
+  event.preventDefault();
+
   switch (event.key) {
     case "ArrowLeft":
-      moveCurrentPiece(-1);
+      performPlayerAction("left");
       break;
     case "ArrowRight":
-      moveCurrentPiece(1);
+      performPlayerAction("right");
       break;
     case "ArrowDown":
       // 아래 방향키를 누를 때마다 자동 낙하를 기다리지 않고 한 칸 내립니다.
-      dropPiece();
+      performPlayerAction("soft-drop");
       break;
     case "ArrowUp":
-      rotateCurrentPiece();
+      performPlayerAction("rotate");
       break;
     default:
       // 스페이스바를 길게 눌렀을 때 여러 블록이 연속 낙하하는 것을 방지합니다.
       if (!event.repeat) {
-        hardDropCurrentPiece();
+        performPlayerAction("hard-drop");
       }
   }
+}
+
+/**
+ * 모바일 조작 버튼의 data-action 값을 공통 조작 함수에 전달합니다.
+ */
+function handleMobileControl(event) {
+  event.preventDefault();
+  performPlayerAction(event.currentTarget.dataset.action);
 }
 
 /**
@@ -538,3 +577,6 @@ function restartGame() {
 restartGame();
 document.addEventListener("keydown", handleKeyDown);
 restartButton.addEventListener("click", restartGame);
+mobileControlButtons.forEach((button) => {
+  button.addEventListener("click", handleMobileControl);
+});

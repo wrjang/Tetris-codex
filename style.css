@@ -26,13 +26,51 @@ body {
   gap: 24px;
 }
 
+.board-area {
+  width: min(300px, calc(100vw - 244px));
+}
+
 #game-board {
   display: block;
-  width: min(300px, calc(100vw - 244px));
+  width: 100%;
   height: auto;
   aspect-ratio: 1 / 2;
   background: #000000;
   border: 2px solid #4a4a4a;
+}
+
+.mobile-controls {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.mobile-controls button {
+  min-height: 48px;
+  padding: 10px 8px;
+  border: 1px solid #5f5f5f;
+  border-radius: 6px;
+  background: #303030;
+  color: #ffffff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-controls button:active {
+  background: #00bcd4;
+  color: #001417;
+  transform: translateY(1px);
+}
+
+.mobile-controls .hard-drop-button {
+  grid-column: span 2;
 }
 
 .score-panel {
@@ -113,18 +151,28 @@ body {
 }
 
 @media (max-width: 560px) {
+  body {
+    padding: 12px;
+    place-items: start center;
+  }
+
   .game-layout {
     flex-direction: column;
     align-items: center;
+    gap: 16px;
   }
 
-  #game-board {
-    width: min(300px, calc(100vw - 40px));
+  .board-area {
+    width: min(300px, calc(100vw - 24px));
+  }
+
+  .mobile-controls {
+    display: grid;
   }
 
   .score-panel {
     flex-basis: auto;
-    width: min(300px, calc(100vw - 40px));
+    width: min(300px, calc(100vw - 24px));
   }
 
   .stats-grid {
@@ -133,5 +181,12 @@ body {
 
   #next-piece {
     width: 100px;
+  }
+}
+
+/* 화면 너비가 넓은 태블릿도 터치 기기라면 조작 버튼을 표시합니다. */
+@media (pointer: coarse) {
+  .mobile-controls {
+    display: grid;
   }
 }

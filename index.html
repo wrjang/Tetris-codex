@@ -8,12 +8,37 @@
   </head>
   <body>
     <main class="game-layout">
-      <canvas
-        id="game-board"
-        width="300"
-        height="600"
-        aria-label="테트리스 게임 보드"
-      ></canvas>
+      <section class="board-area" aria-label="테트리스 게임 영역">
+        <canvas
+          id="game-board"
+          width="300"
+          height="600"
+          aria-label="테트리스 게임 보드"
+        ></canvas>
+
+        <div class="mobile-controls" aria-label="모바일 게임 조작">
+          <button type="button" data-action="rotate" aria-label="블록 회전">
+            ↻ 회전
+          </button>
+          <button
+            class="hard-drop-button"
+            type="button"
+            data-action="hard-drop"
+            aria-label="블록 즉시 하강"
+          >
+            ⇊ 즉시 하강
+          </button>
+          <button type="button" data-action="left" aria-label="왼쪽 이동">
+            ←
+          </button>
+          <button type="button" data-action="soft-drop" aria-label="아래로 이동">
+            ↓
+          </button>
+          <button type="button" data-action="right" aria-label="오른쪽 이동">
+            →
+          </button>
+        </div>
+      </section>
 
       <aside class="score-panel" aria-label="점수 영역">
         <h1>TETRIS</h1>
